@@ -215,12 +215,16 @@ public class MatrixContext implements Serializable {
       } else {
         indexStart = Long.MIN_VALUE;
         indexEnd = Long.MAX_VALUE;
+        colNum = Long.MAX_VALUE;
       }
     } else if (colNum == -1 && indexEnd > indexStart) {
       // start/end set
       // for dense type, we need to set the colNum to set dim for vectors
-      if (rowType.isIntKey())
+      if (rowType.isIntKey()) {
         colNum = indexEnd - indexStart;
+      } else {
+        colNum = indexEnd;
+      }
     } else if (colNum > 0 && indexEnd <= indexStart) {
       // colNum set, start/end not set
       indexStart = 0;
