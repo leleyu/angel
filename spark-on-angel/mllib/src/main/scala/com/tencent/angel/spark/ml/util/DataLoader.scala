@@ -18,11 +18,14 @@
 
 package com.tencent.angel.spark.ml.util
 
+import java.math.BigInteger
+
 import com.tencent.angel.exception.AngelException
 import com.tencent.angel.ml.feature.LabeledData
 import com.tencent.angel.ml.math2.VFactory
 import com.tencent.angel.ml.math2.storage.IntFloatDenseVectorStorage
 import com.tencent.angel.ml.math2.vector._
+import com.tencent.angel.spark.ml.util.DataLoader.isTargetField
 
 import scala.collection.mutable.ArrayBuffer
 import org.apache.spark.ml.linalg.{Vector, Vectors}
@@ -81,6 +84,32 @@ object DataLoader {
     }
     val x = VFactory.sparseLongKeyFloatVector(dim, keys, vals)
     new LabeledData(x, y)
+  }
+
+  def parseLongDummy(text: String, dim: Long, field: String): LabeledData = {
+    if (null == text) return null
+    var splits = text.trim.split(" ")
+    if (splits.length < 1) return null
+    var y = splits(0).toDouble
+    if (y == 0.0) y = -1.0
+
+    splits = splits.tail
+    splits = splits.filterNot(isTargetField(_, field))
+    val len = splits.length
+    val keys = new Array[Long](len)
+
+    splits.zipWithIndex.foreach{ case (value: String, indx2: Int) =>
+      keys(indx2) = value.toLong
+    }
+
+    val x = VFactory.longDummyVector(dim, keys);
+    new LabeledData(x, y)
+  }
+
+  def isTargetField(value: String, field: String): Boolean = {
+    var x = new BigInteger(value, 10)
+    x = x.shiftRight(48)
+    String.valueOf(x.longValue) == field
   }
 
   def parseLongDummy(text: String, dim: Long): LabeledData = {

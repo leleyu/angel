@@ -32,6 +32,9 @@ object FTRLExample {
     val possionRate = params.getOrElse("possion", "0.1f").toFloat
     val bits = params.getOrElse("bits", "20").toInt
     val numPartitions = params.getOrElse("numPartitions", "100").toInt
+    val field = params.getOrElse("field", "").toString
+    val testInput = params.getOrElse("testInput","").toString
+    val log = params.getOrElse("log","").toString
 
     val conf = new SparkConf()
 
@@ -43,7 +46,7 @@ object FTRLExample {
     PSContext.getOrCreate(sc)
 
     val data = sc.textFile(input)
-      .map(s => (DataLoader.parseLongFloat(s, dim), DataLoader.parseLabel(s, false)))
+      .map(s => (DataLoader.parseLongDummy(s, dim, field), DataLoader.parseLabel(s, false)))
       .map {
         f =>
           f._1.setY(f._2)
@@ -73,7 +76,6 @@ object FTRLExample {
     if (modelPath.length > 0)
       opt.load(modelPath + "/back")
 
-    for (epoch <- 1 to numEpoch) {
       val totalLoss = data.mapPartitions {
         case iterator =>
           val loss = iterator
@@ -82,23 +84,30 @@ object FTRLExample {
           Iterator.single(loss)
       }.sum()
 
-      val scores = data.sample(false, 0.01, 42).mapPartitions {
+    val test = sc.textFile(testInput)
+      .map(s => (DataLoader.parseLongDummy(s, dim, field), DataLoader.parseLabel(s, false)))
+      .map {
+        f =>
+          f._1.setY(f._2)
+          f._1
+      }
+
+      val scores = test.sample(false, 0.01, 42).mapPartitions {
         case iterator =>
           iterator.sliding(batchSize, batchSize)
             .flatMap(f => opt.predict(f.toArray))
       }
       val auc = new AUC().calculate(scores)
 
-      println(s"epoch=$epoch loss=${totalLoss / size} auc=$auc")
-    }
+      println(s"loss=${totalLoss / size} auc=$auc")
 
-    if (output.length > 0) {
-      println(s"saving model to path $output")
-      opt.weight
-      opt.saveWeight(output)
-      opt.save(output + "/back")
-      println(s"saving z n and w finish")
-    }
+//    if (output.length > 0) {
+//      println(s"saving model to path $output")
+//      opt.weight
+//      opt.saveWeight(output)
+//      opt.save(output + "/back")
+//      println(s"saving z n and w finish")
+//    }
 
     PSContext.stop()
     SparkContext.getOrCreate().stop()
