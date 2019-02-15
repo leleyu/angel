@@ -1,5 +1,8 @@
 package com.tencent.angel.spark.examples.cluster
 
+import java.io._
+import java.net.URI
+
 import com.tencent.angel.conf.AngelConf
 import com.tencent.angel.ml.math2.vector.LongFloatVector
 import com.tencent.angel.ml.matrix.RowType
@@ -9,6 +12,9 @@ import com.tencent.angel.spark.ml.core.ArgsUtil
 import com.tencent.angel.spark.ml.core.metric.AUC
 import com.tencent.angel.spark.ml.online_learning.FTRL
 import com.tencent.angel.spark.ml.util.{DataLoader, LoadBalancePartitioner, SparkUtils}
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.fs.{FileSystem, Path}
+import org.apache.hadoop.io.IOUtils
 import org.apache.spark.storage.StorageLevel
 import org.apache.spark.{SparkConf, SparkContext}
 
@@ -53,11 +59,13 @@ object FTRLExample {
           f._1
       }
 
-      data.persist(StorageLevel.DISK_ONLY)
+    data.persist(StorageLevel.DISK_ONLY)
     val size = data.count()
 
-    val max = data.map(f => f.getX.asInstanceOf[LongFloatVector].getStorage().getIndices.max).max()
-    val min = data.map(f => f.getX.asInstanceOf[LongFloatVector].getStorage().getIndices.min).min()
+//    val max = data.map(f => f.getX.asInstanceOf[LongFloatVector].getStorage().getIndices.max).max()
+//    val min = data.map(f => f.getX.asInstanceOf[LongFloatVector].getStorage().getIndices.min).min()
+    val max = 185210504185605061L
+    val min = 28428972899916437L
 
     println(s"num examples = ${size} min_index=$min max_index=$max")
 
@@ -100,7 +108,7 @@ object FTRLExample {
       val auc = new AUC().calculate(scores)
 
       println(s"loss=${totalLoss / size} auc=$auc")
-
+      DataParse.appendHDFS(log, field, auc.toString)
 //    if (output.length > 0) {
 //      println(s"saving model to path $output")
 //      opt.weight
