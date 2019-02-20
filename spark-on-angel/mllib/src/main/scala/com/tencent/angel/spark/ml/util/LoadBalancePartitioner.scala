@@ -37,7 +37,7 @@ abstract class AutoPartitioner(bits: Int, numPartitions: Int) extends Serializab
       // keep each partition similar load and limit the range of each partition
       if (current > per || ((sorted(i)._1 << bits - start > limit) && current > per / 2)) {
         val part = new PartContext(0, rowNum, start, sorted(i)._1 << bits, 0)
-        println(s"part=${part} load=${current} range=${part.getEndCol - part.getStartCol}")
+//        println(s"part=${part} load=${current} range=${part.getEndCol - part.getStartCol}")
         ctx.addPart(part)
         start = sorted(i)._1 << bits
         current = 0L

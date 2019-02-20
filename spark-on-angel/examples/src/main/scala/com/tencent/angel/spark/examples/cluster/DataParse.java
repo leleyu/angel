@@ -11,6 +11,7 @@ import java.net.URI;
 public class DataParse {
 
     public static void appendHDFS(String file, String field, String auc) {
+        System.out.println("auc is saved");
         Configuration conf = new Configuration();
         conf.setBoolean("dfs.support.append", true);
         String content = field + ":" + auc + ",";
@@ -20,6 +21,7 @@ public class DataParse {
             InputStream in = new BufferedInputStream(new ByteArrayInputStream(content.getBytes()));
             OutputStream out = fs.append(new Path(file));
             IOUtils.copyBytes(in, out, 4096, true);
+            fs.close();
         }  catch (IOException e) {
             e.printStackTrace();
         }

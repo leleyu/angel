@@ -91,7 +91,7 @@ object FTRLExample {
             .map(f => opt.optimize(f.toArray)).sum
           Iterator.single(loss)
       }.sum()
-
+    println(s"test input ${testInput}")
     val test = sc.textFile(testInput)
       .map(s => (DataLoader.parseLongDummy(s, dim, field), DataLoader.parseLabel(s, false)))
       .map {
@@ -100,7 +100,7 @@ object FTRLExample {
           f._1
       }
 
-      val scores = test.sample(false, 0.01, 42).mapPartitions {
+      val scores = test.mapPartitions {
         case iterator =>
           iterator.sliding(batchSize, batchSize)
             .flatMap(f => opt.predict(f.toArray))
