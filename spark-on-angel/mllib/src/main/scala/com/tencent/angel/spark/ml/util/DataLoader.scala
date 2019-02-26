@@ -92,7 +92,6 @@ object DataLoader {
     if (splits.length < 1) return null
     var y = splits(0).toDouble
     if (y == 0.0) y = -1.0
-
     splits = splits.tail
     splits = splits.filterNot(isTargetField(_, field))
     val len = splits.length
@@ -111,8 +110,9 @@ object DataLoader {
 
   def isTargetField(value: String, field: String): Boolean = {
     var x = new BigInteger(value, 10)
+    val f = field.split(",")
     x = x.shiftRight(48)
-    String.valueOf(x.longValue) == field
+    f.contains(String.valueOf(x.longValue))
   }
 
   def parseLongDummy(text: String, dim: Long): LabeledData = {
