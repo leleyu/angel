@@ -2,12 +2,12 @@ package com.tencent.angel.ml.math2.matrix;
 
 import com.tencent.angel.ml.math2.vector.Vector;
 
-public abstract class CsrMatrix extends Matrix{
+public abstract class CsrIntMatrix extends Matrix{
   protected int [] indices;
   protected int [] indptr;
   protected int [] shape;
 
-  public CsrMatrix() {}
+  public CsrIntMatrix() {}
 
   public abstract Vector getRow(int idx);
 

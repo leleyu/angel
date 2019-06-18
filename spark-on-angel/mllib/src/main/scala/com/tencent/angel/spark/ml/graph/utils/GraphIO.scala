@@ -65,13 +65,13 @@ object GraphIO {
     val schema = if (isWeighted) {
       StructType(Seq(
         StructField("src", LongType, nullable = false),
-        StructField("dst", LongType, nullable = false)
+        StructField("dst", LongType, nullable = false),
+        StructField("wgt", LongType, nullable = false)
       ))
     } else {
       StructType(Seq(
         StructField("src", LongType, nullable = false),
-        StructField("dst", LongType, nullable = false),
-        StructField("wgt", LongType, nullable = false)
+        StructField("dst", LongType, nullable = false)
       ))
     }
     ss.read

@@ -6,15 +6,15 @@ import com.tencent.angel.ml.math2.vector.Vector;
 import it.unimi.dsi.fastutil.floats.FloatArrayList;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 
-public class CsrFloatMatrix extends CsrMatrix {
+public class CsrIntFloatMatrix extends CsrIntMatrix {
 
   protected float[] values;
 
-  public CsrFloatMatrix() {
+  public CsrIntFloatMatrix() {
     super();
   }
 
-  public CsrFloatMatrix(int matrixId, int clock, int[] rowIndices, int[] colIndices, float[] values, int[] shape) {
+  public CsrIntFloatMatrix(int matrixId, int clock, int[] rowIndices, int[] colIndices, float[] values, int[] shape) {
     this.matrixId = matrixId;
     this.clock = clock;
     this.shape = shape;
@@ -23,11 +23,11 @@ public class CsrFloatMatrix extends CsrMatrix {
     this.values = values;
   }
 
-  public CsrFloatMatrix(int[] rowIndices, int[] colIndices, float[] values, int[] shape) {
+  public CsrIntFloatMatrix(int[] rowIndices, int[] colIndices, float[] values, int[] shape) {
     this(0, 0, rowIndices, colIndices, values, shape);
   }
 
-  public CsrFloatMatrix(int matrixId, int clock, float[] values, int[] indices, int[] indptr, int[] shape) {
+  public CsrIntFloatMatrix(int matrixId, int clock, float[] values, int[] indices, int[] indptr, int[] shape) {
     this.matrixId = matrixId;
     this.clock = clock;
     this.values = values;
@@ -36,7 +36,7 @@ public class CsrFloatMatrix extends CsrMatrix {
     this.indptr = indptr;
   }
 
-  public CsrFloatMatrix(float[] values, int[] indices, int[] indptr, int[] shape) {
+  public CsrIntFloatMatrix(float[] values, int[] indices, int[] indptr, int[] shape) {
     this(0, 0, values, indices, indptr, shape);
   }
 
@@ -106,7 +106,7 @@ public class CsrFloatMatrix extends CsrMatrix {
   public Matrix copy() {
     float[] newData = new float[values.length];
     System.arraycopy(values, 0, newData, 0, values.length);
-    return new CsrFloatMatrix(matrixId, clock, newData, indices, indptr, shape);
+    return new CsrIntFloatMatrix(matrixId, clock, newData, indices, indptr, shape);
   }
 
   @Override

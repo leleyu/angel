@@ -3,7 +3,7 @@ package com.tencent.angel.ml.math2.matrix.CsrMatrixTest
 import com.tencent.angel.ml.math2.MFactory
 import org.scalatest.FunSuite
 
-class CsrMatrixTest extends FunSuite{
+class CsrIntMatrixTest extends FunSuite{
   val rowIndices = Array[Int](1, 1, 1, 2)
   val colIndices = Array[Int](2, 0, 1, 2)
   val indptr = Array[Int](0, 0, 3, 4)

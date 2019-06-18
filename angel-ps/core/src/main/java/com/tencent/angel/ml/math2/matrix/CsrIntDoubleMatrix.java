@@ -6,15 +6,15 @@ import com.tencent.angel.ml.math2.vector.Vector;
 import it.unimi.dsi.fastutil.doubles.DoubleArrayList;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 
-public class CsrDoubleMatrix extends CsrMatrix {
+public class CsrIntDoubleMatrix extends CsrIntMatrix {
 
   protected double[] values;
 
-  public CsrDoubleMatrix() {
+  public CsrIntDoubleMatrix() {
     super();
   }
 
-  public CsrDoubleMatrix(int matrixId, int clock, int[] rowIndices, int[] colIndices, double[] values, int[] shape) {
+  public CsrIntDoubleMatrix(int matrixId, int clock, int[] rowIndices, int[] colIndices, double[] values, int[] shape) {
     this.matrixId = matrixId;
     this.clock = clock;
     this.shape = shape;
@@ -23,11 +23,11 @@ public class CsrDoubleMatrix extends CsrMatrix {
     this.values = values;
   }
 
-  public CsrDoubleMatrix(int[] rowIndices, int[] colIndices, double[] values, int[] shape) {
+  public CsrIntDoubleMatrix(int[] rowIndices, int[] colIndices, double[] values, int[] shape) {
     this(0, 0, rowIndices, colIndices, values, shape);
   }
 
-  public CsrDoubleMatrix(int matrixId, int clock, double[] values, int[] indices, int[] indptr, int[] shape) {
+  public CsrIntDoubleMatrix(int matrixId, int clock, double[] values, int[] indices, int[] indptr, int[] shape) {
     this.matrixId = matrixId;
     this.clock = clock;
     this.values = values;
@@ -36,7 +36,7 @@ public class CsrDoubleMatrix extends CsrMatrix {
     this.shape = shape;
   }
 
-  public CsrDoubleMatrix(double[] values, int[] indices, int[] indptr, int[] shape) {
+  public CsrIntDoubleMatrix(double[] values, int[] indices, int[] indptr, int[] shape) {
     this(0, 0, values, indices, indptr, shape);
   }
 
@@ -104,7 +104,7 @@ public class CsrDoubleMatrix extends CsrMatrix {
   public Matrix copy() {
     double[] newData = new double[values.length];
     System.arraycopy(values, 0, newData, 0, values.length);
-    return new CsrDoubleMatrix(matrixId, clock, newData, indices, indptr, shape);
+    return new CsrIntDoubleMatrix(matrixId, clock, newData, indices, indptr, shape);
   }
 
   @Override

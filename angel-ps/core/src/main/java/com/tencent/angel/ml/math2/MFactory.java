@@ -1038,43 +1038,43 @@ public class MFactory {
 
 
 
-  public static CsrDoubleMatrix csrDoubleMatrix(
+  public static CsrIntDoubleMatrix csrIntDoubleMatrix(
       int matrixId, int clock, int[] rowIndices, int[] colIndices, double[] values, int[] shape) {
-    return new CsrDoubleMatrix(matrixId, clock, rowIndices, colIndices, values, shape);
+    return new CsrIntDoubleMatrix(matrixId, clock, rowIndices, colIndices, values, shape);
   }
 
-  public static CsrDoubleMatrix csrDoubleMatrix(
+  public static CsrIntDoubleMatrix csrIntDoubleMatrix(
       int[] rowIndices, int[] colIndices, double[] values, int[] shape) {
-    return new CsrDoubleMatrix(0, 0, rowIndices, colIndices, values, shape);
+    return new CsrIntDoubleMatrix(0, 0, rowIndices, colIndices, values, shape);
   }
 
-  public static CsrFloatMatrix csrFloatMatrix(
+  public static CsrIntFloatMatrix csrIntFloatMatrix(
       int matrixId, int clock, int[] rowIndices, int[] colIndices, float[] values, int[] shape) {
-    return new CsrFloatMatrix(matrixId, clock, rowIndices, colIndices, values, shape);
+    return new CsrIntFloatMatrix(matrixId, clock, rowIndices, colIndices, values, shape);
   }
 
-  public static CsrFloatMatrix csrFloatMatrix(
+  public static CsrIntFloatMatrix csrIntFloatMatrix(
       int[] rowIndices, int[] colIndices, float[] values, int[] shape) {
-    return new CsrFloatMatrix(rowIndices, colIndices, values, shape);
+    return new CsrIntFloatMatrix(rowIndices, colIndices, values, shape);
   }
 
-  public static CsrDoubleMatrix csrDoubleMatrix(
+  public static CsrIntDoubleMatrix csrIntDoubleMatrix(
       int matrixId, int clock, double[] values, int[] indices, int[] indptr, int[] shape) {
-    return new CsrDoubleMatrix(matrixId, clock, values, indices, indptr, shape);
+    return new CsrIntDoubleMatrix(matrixId, clock, values, indices, indptr, shape);
   }
 
-  public static CsrDoubleMatrix csrDoubleMatrix(
+  public static CsrIntDoubleMatrix csrIntDoubleMatrix(
       double[] values, int[] indices, int[] indptr, int[] shape) {
-    return new CsrDoubleMatrix(0, 0,values,  indices, indptr, shape);
+    return new CsrIntDoubleMatrix(0, 0,values,  indices, indptr, shape);
   }
 
-  public static CsrFloatMatrix csrFloatMatrix(
+  public static CsrIntFloatMatrix csrIntFloatMatrix(
       int matrixId, int clock, float[] values, int[] indices, int[] indptr, int[] shape) {
-    return new CsrFloatMatrix(matrixId, clock, values, indices, indptr, shape);
+    return new CsrIntFloatMatrix(matrixId, clock, values, indices, indptr, shape);
   }
 
-  public static CsrFloatMatrix csrFloatMatrix(
+  public static CsrIntFloatMatrix csrIntFloatMatrix(
       float[] values, int[] indices, int[] indptr, int[] shape) {
-    return new CsrFloatMatrix(values, indices, indptr, shape);
+    return new CsrIntFloatMatrix(values, indices, indptr, shape);
   }
 }
